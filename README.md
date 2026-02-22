@@ -52,6 +52,34 @@ python commit_critic.py --analyze --url="<GITHUB_REPO_URL>"
 git add .
 python commit_critic.py --write
 ```
+#### 🛠️ Global Integration 
+You can use this tool as a global Git extension to maintain high-quality commit standards across all your local projects.
+**1. Ensure Path Independence**
+To allow the script to find your API key from any directory, ensure llm_service.py uses absolute path resolution for the `.env` file:
+
+```Python
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Force search for .env in the script's home directory
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")
+```
+
+**2. Set Up Global Aliases**
+Add these to your shell configuration file (e.g.,` ~/.zshrc` or `~/.bashrc`) using the path to your project's virtual environment. This ensures all dependencies like `google-genai` are always available。
+
+```Bash
+# Replace [PATH_TO_PROJECT] with your actual project directory
+alias gcw='/[PATH_TO_PROJECT]/venv/bin/python /[PATH_TO_PROJECT]/commit_critic.py --write'
+alias gca='/[PATH_TO_PROJECT]/venv/bin/python /[PATH_TO_PROJECT]/commit_critic.py --analyze'
+```
+**3. Usage Anywhere**
+After running `source ~/.zshrc`, you can navigate to any Git repository on your machine and run:
+
+- **gcw**: To generate a perfect commit message for your staged changes.
+
+- **gca**: To audit the history of the current repository.
 
 #### 📊 Example Output
 **1. Analysis Report(**`--analyze`**)**
