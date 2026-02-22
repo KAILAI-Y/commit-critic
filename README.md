@@ -54,6 +54,7 @@ python commit_critic.py --write
 ```
 #### 🛠️ Global Integration 
 You can use this tool as a global Git extension to maintain high-quality commit standards across all your local projects.
+
 **1. Ensure Path Independence**
 To allow the script to find your API key from any directory, ensure llm_service.py uses absolute path resolution for the `.env` file:
 
