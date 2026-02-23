@@ -84,10 +84,15 @@ After running `source ~/.zshrc`, you can navigate to any Git repository on your 
 
 #### 📊 Example Output
 **1. Analysis Report(**`--analyze`**)**
+
 The tool identifies poor practices and suggests context-aware improvements:
+
 ![alt text](/images/output_analyze_bad.png)
 ![alt text](/images/output_analyze_good.png)
 ![alt text](/images/output_analyze_stats.png)
+
 **2. Interactive Mode (**`--write`**)**
+
 Real-time analysis of your staged changes with smart summaries:
+
 ![alt text](/images/output_write.png)
