@@ -53,34 +53,59 @@ git add .
 python commit_critic.py --write
 ```
 #### 🛠️ Global Integration 
-You can use this tool as a global Git extension to maintain high-quality commit standards across all your local projects.
+You can use this tool as a global Git extension to maintain high-quality commit standards across all your local projects—without needing to move your files or nest your repositories.
 
-**1. Ensure Path Independence**
-To allow the script to find your API key from any directory, ensure llm_service.py uses absolute path resolution for the `.env` file:
+**1.  Keep Projects Separate**
+Your directory structure should look like this:
+
+```Plaintext
+/Users/yourname/Desktop/
+├── commit-critic/         <-- The tool (with its .env and venv)
+├── your-project/          <-- Your project (where you run the command)
+└── other-project/      <-- Another project
+```
+
+**2. Ensure Path Independence**
+To allow the script to find its own API key and dependencies from any directory, ensure `llm_service.py` uses absolute path resolution for the `.env` file:
 
 ```Python
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Force search for .env in the script's home directory
+# Force the tool to look for its .env in its own home directory, 
+# regardless of where you are running the command from.
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 ```
 
-**2. Set Up Global Aliases**
-Add these to your shell configuration file (e.g.,` ~/.zshrc` or `~/.bashrc`) using the path to your project's virtual environment. This ensures all dependencies like `google-genai` are always available。
+**3. Set Up Global Aliases**
+Add these to your shell configuration file (e.g., `nano ~/.zshrc`). **Note**: These must be on a **single line** in your config file to work correctly. Replace the paths below with the absolute paths to your local setup:
 
 ```Bash
 # Replace [PATH_TO_PROJECT] with your actual project directory
 alias gcw='/[PATH_TO_PROJECT]/venv/bin/python /[PATH_TO_PROJECT]/commit_critic.py --write'
 alias gca='/[PATH_TO_PROJECT]/venv/bin/python /[PATH_TO_PROJECT]/commit_critic.py --analyze'
 ```
-**3. Usage Anywhere**
-After running `source ~/.zshrc`, you can navigate to any Git repository on your machine and run:
 
-- **gcw**: To generate a perfect commit message for your staged changes.
 
-- **gca**: To audit the history of the current repository.
+**4. Usage Anywhere**
+After saving your configuration, refresh your terminal with `source ~/.zshrc`.
+
+**Check if it's set up correctly:**
+Run the following command to verify your aliases are active:
+
+```Bash
+alias | grep gc
+```
+You should see both gcw and gca listed with their full paths. This ensures you didn't have any typos or formatting issues during setup.
+
+**Usage:**
+1. **Go to your project**: `cd ~/Desktop/your-project`
+
+2. **Stage your changes**: `git add .`
+
+3. **Run the tool**: Simply type `gcw` or `gca`.
+
 
 #### 📊 Example Output
 **1. Analysis Report(**`--analyze`**)**
